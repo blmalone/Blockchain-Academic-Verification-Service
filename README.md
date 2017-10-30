@@ -5,4 +5,4 @@ The corresponding code for the research paper I wrote early 2017. You can find t
 Main features of the application can be found in the paper.
 
 
-For a system demo, refer to this youtube video: (System Demo)[https://www.youtube.com/watch?v=3-YWdP2X6pw]
+For a system demo, refer to this youtube video: [System Demo](https://www.youtube.com/watch?v=3-YWdP2X6pw)
