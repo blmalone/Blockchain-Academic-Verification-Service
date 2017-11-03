@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Upload Qualification</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="icon" sizes="32x32" href="/favicon.ico?v=3"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../../css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Fredoka+One"/>
+    <style>
+        .left-side-header {
+            font-family: 'Fredoka One', cursive;
+            font-weight: 100;
+            color: #10b745;
+            font-size: 48px;
+            float: left;
+            padding: 10px;
+        }
+
+        .nav {
+            padding: 7px;
+            font-weight: bold;
+        }
+
+        .container-body {
+            margin-left: 7px;
+        }
+
+        .boxalign2 {
+            margin-left: 10px;
+        }
+
+        .inputwrap label {
+            display: inline-block;
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="navbar">
+        <div class="navbar-inner">
+            <a class="left-side-header" th:href="@{/}" href="home.html" style="font-size: 2.5em; text-decoration:none;">Unilog.
+                <span style="color:white !important; font-size: 0.5em">&nbsp;&nbsp;&nbsp;&nbsp;Putting you in control</span>
+            </a>
+            <ul class="nav">
+                <li><a th:href="@{/}" href="home.html" style="color:white !important;">&nbsp;&nbsp;Home</a></li>
+                <li><a th:href="@{/upload/qualification}" href="qualification.html" style="color:white !important;">
+                    &nbsp;&nbsp;Upload</a></li>
+                <li><a th:href="@{/complete/registration}" href="registration.html" style="color:white !important;">
+                    &nbsp;&nbsp;Registration</a></li>
+                <li><a th:href="@{/admin/portal}" href="adminPortal.html" style="color:white !important;">&nbsp;&nbsp;Admin
+                    Portal</a></li>
+                <li><a th:href="@{/logout}" href="logout" style="color:white !important;">&nbsp;&nbsp;Logout</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="container-body">
+        <h1>Upload Qualification</h1>
+        <form action="#" th:action="@{/upload/qualification}" th:object="${qualification}" method="post">
+            <br/>
+            <p th:if="${success}" class="alert alert-success">Your qualification was uploaded!</p>
+            <p th:if="${emailError}" class="alert alert-error">Error processing upload, please check that your email addresses are
+                correct. If the problem persists, the server may be experiencing technical difficulties.</p>
+            <p th:if="${qualificationError}" class="alert alert-error">Error uploading qualification, please try again.
+                <br/>All fields
+                are required, except "Additional Information" field.</p>
+            <div id="boxalign2" class="boxalign2">
+                <div class="inputwrap">
+                    <label>Qualification Code: </label>
+                    <input type="text" th:field="*{qualificationCode}"/>
+                </div>
+                <div class="inputwrap">
+                    <label>Title: </label>
+                    <input type="text" th:field="*{qualificationTitle}"/><br/>
+                </div>
+                <div class="inputwrap">
+                    <label>Accredited Institution:</label>
+                    <input type="text" th:field="*{accreditedInstitution}"/><br/>
+                </div>
+                <div>
+                    <ul>
+                        <li th:each="item, stat : *{transcripts}" class="itemRow">
+                            <hr/>
+                            <div>
+                                <div class="inputwrap">
+                                    <label th:for="${'transcriptReference-'+stat.index}">Student Number</label>
+                                    <input type="text" class="form-control quantity" name="transcriptReference"
+                                           th:field="*{transcripts[__${stat.index}__].transcriptReference}"
+                                           th:id="${'transcriptReference-'+stat.index}"/>
+                                </div>
+                                <div class="inputwrap">
+                                    <label th:for="${'pass-'+stat.index}">Pass</label>
+                                    <input type="checkbox" class="form-control quantity" name="pass"
+                                           th:field="*{transcripts[__${stat.index}__].pass}"
+                                           th:id="${'pass-'+stat.index}"/>
+                                </div>
+                                <div class="inputwrap">
+                                    <label th:for="${'recipientEmailAddress-'+stat.index}">Student Email</label>
+                                    <input type="text" class="form-control quantity" name="recipientEmailAddress"
+                                           th:field="*{transcripts[__${stat.index}__].recipientEmailAddress}"
+                                           th:id="${'recipientEmailAddress-'+stat.index}"/>
+                                </div>
+                                <div class="inputwrap">
+                                    <label th:for="${'classification-'+stat.index}">Classification</label>
+                                    <select th:field="*{transcripts[__${stat.index}__].classification}">
+                                        <div>
+                                            <option disabled="true" selected="selected" value="">Select</option>
+                                            <option value="1">1</option>
+                                            <option value="2.1">2:1</option>
+                                            <option value="2.2">2:2</option>
+                                            <option value="3">3</option>
+                                        </div>
+                                    </select>
+                                </div>
+                                <div class="inputwrap">
+                                    <label th:for="${'additionalInformation-'+stat.index}">Additional
+                                        Information</label>
+                                    <input type="text" class="form-control quantity" name="additionalInformation"
+                                           th:field="*{transcripts[__${stat.index}__].additionalInformation}"
+                                           th:id="${'additionalInformation-'+stat.index}"/>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
+            </div>
+        </form>
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out"/>
+        </form>
+    </div>
+</div>
+</body>
+</html>

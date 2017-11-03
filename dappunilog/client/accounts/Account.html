@@ -1,0 +1,18 @@
+<template name="Account">
+    {{#if isActive this.address}}
+        <article class="account active" data-id="{{address}}">
+            <h3>
+                {{name}}
+                {{> dapp_identicon identity=address class="dapp-small"}}
+            </h3>
+            <p>
+                Account Address: <input type="text" value="{{address}}" class="web3_address"/>
+            </p>
+            <p>
+                <button class="btn-primary open-edit-name-modal">Edit Account Name</button>
+                <button class="btn-primary getPubKey">Acquire Public Key</button>
+            </p>
+            <a href="/account/{{_id}}">View Details</a>
+        </article>
+    {{/if}}
+</template>

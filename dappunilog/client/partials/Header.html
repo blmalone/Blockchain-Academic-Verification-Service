@@ -1,0 +1,22 @@
+<head>
+    <link rel="icon" sizes="32x32" href="/favicon.ico?v=3">
+</head>
+<template name="Header">
+    <header>
+        <div class="header-contents">
+            <h1 class="left-side-header" style="font-size: 2.5em">
+                Unilog.
+                <span style="color:white !important; font-size: 0.5em">
+                    &nbsp;&nbsp;&nbsp;&nbsp;Putting you in control
+                </span>
+            </h1>
+            <ul class="right-side-header">
+                <ul>
+                    <li><a href="/overview" class="header-logo"><img class="header-logo" src="/favicon_white_removed.png" /></a></li>
+                    <li><a href="/FAQ">FAQ</a></li>
+                    <li>{{> loginButtons}}</li>
+                </ul>
+            </ul>
+        </div>
+    </header>
+</template>

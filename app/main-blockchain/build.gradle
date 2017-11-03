@@ -1,0 +1,39 @@
+group = "com.unilog.blockchain"
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+	maven { url "http://dl.bintray.com/ethereum/maven" }
+}
+
+dependencies {
+
+	//Mapping between entity and representation objects
+	compile('net.sf.dozer:dozer:5.5.1')
+
+	//Logging
+	compile('org.slf4j:slf4j-api:1.7.21')
+
+	//Various file reading functions and other I/O utils
+	compile('org.apache.commons:commons-io:1.3.2')
+
+	//Hashing algoithm
+	compile('org.bouncycastle:bcprov-jdk15on:1.54')
+
+	compile ("org.ethereum:ethereumj-core:latest.release"){
+		exclude group: "log4j"
+		exclude group: "org.slf4j", module: "log4j-over-slf4j"
+		exclude group: "org.slf4j", module: "slf4j-log4j12"
+
+	}
+
+	testCompile group: 'junit', name: 'junit', version: '4.11'
+	testCompile('org.mockito:mockito-all:1.9.5')
+	testCompile('org.powermock:powermock-mockito-release-full:1.5.4')
+}
+

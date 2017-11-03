@@ -1,0 +1,23 @@
+<template name="editAccountModal">
+    <div class="modal fade">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Account Name</h4>
+                </div>
+
+                <div class="modal-body">
+                    <label for="name">Name</label>
+                    <input type="text" id="newAccountNickName" value="{{account.name}}"/>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="save">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</template>

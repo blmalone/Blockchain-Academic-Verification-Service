@@ -1,0 +1,45 @@
+<template name="Records">
+    <div class="accounts-display">
+        <div class="small-border-container">
+            <h1>My Uploaded Records</h1>
+        </div>
+        {{#with account}}
+            <article class="account active" data-id="{{address}}">
+                <h3>
+                    {{name}}
+                    {{> dapp_identicon identity=address class="dapp-small"}}
+                </h3>
+                <p>
+                    Account Address: <input type="text" value="{{address}}" class="web3_address"/>
+                </p>
+                {{#if contractNotSet}}
+                    <p>
+                        Smart contract:
+                        <input type="text"
+                               value='"Please add your contract address supplied by Unilog via the Overview tab."'
+                               class="web3_address"/>
+                    </p>
+                {{else}}
+                    <p>
+                        Smart contract: <input type="text" value="{{contractAddress}}" class="web3_address"/>
+                    </p>
+                {{/if}}
+                <button class="btn-primary getRecordsOnContract" href="/records/{{_id}}">Obtain Record</button>
+                <h5>Your First Record</h5>
+                <br/>
+                {{#if showNoRecordsContent}}
+                    <h5 class="sub-title-hidden">You have no records associated with this smart contract.</h5>
+                {{else}}
+                    <label class="transcriptInputLabel">Accredited Institution:</label> <input type="text" value="{{currentContent.accreditedInstitution}}" class="transcriptInput"/><br/>
+                    <label class="transcriptInputLabel"> Title: </label><input type="text" value="{{currentContent.qualificationTitle}}" class="transcriptInput"/><br/>
+                    <label class="transcriptInputLabel">Qualification Code: </label><input type="text" value="{{currentContent.qualificationCode}}" class="transcriptInput"/><br/>
+                    <label class="transcriptInputLabel">Transcript Reference:</label> <input type="text" value="{{currentContent.transcriptReference}}" class="transcriptInput"/><br/>
+                    <label class="transcriptInputLabel">Recipient EmailAddress:</label> <input type="text" value="{{currentContent.recipientEmailAddress}}" class="transcriptInput"/><br/>
+                    <label class="transcriptInputLabel">Classification:</label> <input type="text" value="{{currentContent.classification}}" class="transcriptInput"/><br/>
+                    <label class="transcriptInputLabel">Additional Information: </label><input type="text" value="{{currentContent.additionalInformation}}" class="transcriptInput"/><br/>
+                    <label class="transcriptInputLabel">Overall Result: </label><input type="text" value="{{currentContent.pass}}" class="transcriptInput"/><br/>
+                {{/if}}
+            </article>
+        {{/with}}
+    </div>
+</template>

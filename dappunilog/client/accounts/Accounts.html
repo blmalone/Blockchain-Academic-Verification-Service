@@ -1,0 +1,33 @@
+<Template name="Accounts" xmlns="http://www.w3.org/1999/html">
+    <h1 class="page-title">Account Management</h1>
+    <div class="accounts-display">
+        <div class="small-border-container">
+            <h3>Active Accounts</h3>
+        </div>
+        {{#if noActiveAccounts}}
+            <h5>
+                You currently do not have any active accounts. <br/><br/>
+                Choose one from the MetaMask extension to continue enjoying Unilog, then click continue below.
+            </h5>
+            <a href="/">Continue...</a>
+        {{else}}
+            <section class="accounts">
+                {{#if Template.subscriptionsReady}}
+                    <!-- iterate over a list of accounts. -->
+                    {{#with getOneEthAccount}}
+                        {{> Account}}
+                    {{/with}}
+                {{else}}
+                    <p>Loading...</p>
+                {{/if}}
+            </section>
+        {{/if}}
+    </div>
+    <div class="small-border-container">
+        <h3>All Accounts</h3>
+    </div>
+    <h4>Both active and inactive accounts are listed here</h4>
+    {{#each ethAccounts}}
+        {{> AllAccount}}
+    {{/each}}
+</Template>

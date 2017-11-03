@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE suppressions PUBLIC
+        "-//Puppy Crawl//DTD Suppressions 1.1//EN"
+        "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
+
+<suppressions>
+
+	<!-- Folder exclusions -->
+	<suppress files="[/\\]resource[/\\]" checks="LineLength.*"/>
+    <suppress files="[/\\]entity[/\\]" checks="Javadoc.*"/>
+    <suppress files="[/\\]representation[/\\]" checks="Javadoc.*"/>
+    <suppress files="[/\\]target[/\\]" checks=".*"/>
+
+    <!-- File type/extension exclusions -->
+    <suppress files=".*.gif" checks=".*"/>
+    <suppress files=".*.jar" checks=".*"/>
+    <suppress files=".*.war" checks=".*"/>
+    <suppress files=".*.xsd" checks=".*"/>
+    <suppress files=".*.class" checks=".*"/>
+    <suppress files=".*.impex" checks=".*"/>
+    <suppress files=".*.csv" checks=".*"/>
+    <suppress files=".*.iml" checks=".*"/>
+    <suppress files=".*.html" checks=".*"/>
+
+    <!-- Specific file name exclusions -->
+    <suppress files=".build.gradle" checks=".*"/>
+    <suppress files="ruleset.xml" checks=".*"/>
+    <suppress files=".ruleset" checks=".*"/>
+    <suppress files="checkstyle.*.xml" checks=".*"/>
+    <suppress files="findbugs.xml" checks=".*"/>
+    <suppress files=".DS_Store" checks=".*"/>
+    <suppress files="UnilogServiceApplication.java" checks=".*" />
+    <suppress files="SmartContractTest.java" checks="MethodName" />
+    <suppress files="Client.java" checks="MagicNumber" />
+    <suppress files="Client.java" checks="LineLength" />
+    <suppress files="NetworkListenerConfig.java" checks="LineLength" />
+    <suppress files="NetworkListenerConfig.java" checks="OperatorWrap" />
+    <suppress files="IPFSDistributedFileSystem.java" checks="HiddenField" />
+
+    <!-- Sample/Dummy file exclusions -->
+    <suppress files=".*Resource.java" checks="LineLength.*"/>
+    <suppress files="Dummy.*.java" checks=".*"/>
+    <suppress files="Sample.*.java" checks=".*"/>
+
+    <!-- Test file exclusions -->
+    <suppress files=".*Test.java" checks="Javadoc.*"/>
+    <suppress files=".*Test.java" checks="VisibilityModifier"/>
+    <suppress files=".*Test.java" checks="MagicNumber"/>
+
+</suppressions>

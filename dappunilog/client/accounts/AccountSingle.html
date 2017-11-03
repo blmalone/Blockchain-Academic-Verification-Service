@@ -1,0 +1,38 @@
+<template name="AccountSingle">
+    <div class="accounts-display">
+        <div class="small-border-container">
+            <h1>Account Overview</h1>
+        </div>
+        {{#with account}}
+            <article class="account active" data-id="{{address}}">
+                <h3>
+                    {{name}}
+                    {{> dapp_identicon identity=address class="dapp-small"}}
+                </h3>
+                <p>
+                    Account Address: <input type="text" value="{{address}}" class="web3_address"/>
+                </p>
+                {{#if contractNotSet}}
+                    <p>
+                        Smart contract:
+                        <input type="text" value='"Please add your contract address supplied by Unilog."'
+                               class="web3_address"/>
+                    </p>
+                {{else}}
+                    <p>
+                        Smart contract: <input type="text" value="{{contractAddress}}" class="web3_address"/>
+                    </p>
+                {{/if}}
+                <p>
+                    <button class="btn-primary open-edit-name-modal">Edit Account Name</button>
+                    <button class="btn-primary getPubKey">Acquire Public Key</button>
+                    {{#if contractNotSet}}
+                        <button class="btn-primary addContractAddress">Add Contract Address</button>
+                    {{else}}
+                        <button class="btn-primary addContractAddress">Edit Contract Address</button>
+                    {{/if}}
+                </p>
+            </article>
+        {{/with}}
+    </div>
+</template>

@@ -1,0 +1,56 @@
+<template name="VerifierPortal">
+    <div class="accounts-display">
+        <div class="small-border-container">
+            <h1>Verifier Portal</h1>
+        </div>
+        {{#with account}}
+            <article class="account verifier" data-id="{{address}}">
+                <h3>
+                    Dashboard
+                </h3>
+                <form class="form-verify">
+                    <p>
+                        Want to verify a candidates token against the block chain? <br/>Enter their token
+                        information and simply click verify.
+                        <br/><br/><label class="transcriptInputLabel">Token</label><br/>
+                    </p>
+                    <label class="transcriptInputLabel">Contract Address: </label><input type="text" name="contractAddress" class="transcriptInput"/>
+                    <label class="transcriptInputLabel">Artifact ID: </label><input type="text" name="artifactId" class="transcriptInput"/>
+                    <br/>
+                    <label class="transcriptInputLabel">Unilog Registry: </label><input type="text" name="registryAddress" class="transcriptInput"/>
+                    <button type="submit" class="verify">Verify</button>
+                </form>
+                <h5>Result</h5>
+                <br/>
+                {{#with result}}
+                    {{#if showNoResult}}
+                        <span class="noResults"><br/>{{result}}</span><br/>
+                    {{else}}
+                        <label class="transcriptInputLabel">Accredited Institution:</label> <input type="text" value="{{accreditedInstitution}}" class="transcriptInput"/><br/>
+                        <label class="transcriptInputLabel">Title: </label><input type="text" value="{{qualificationTitle}}" class="transcriptInput"/><br/>
+                        <label class="transcriptInputLabel">Qualification Code: </label><input type="text" value="{{qualificationCode}}" class="transcriptInput"/><br/>
+                        <label class="transcriptInputLabel">Transcript Reference:</label> <input type="text" value="{{transcriptReference}}" class="transcriptInput"/><br/>
+                        <label class="transcriptInputLabel">Recipient EmailAddress:</label> <input type="text" value="{{recipientEmailAddress}}" class="transcriptInput"/><br/>
+                        <label class="transcriptInputLabel">Classification:</label> <input type="text" value="{{classification}}" class="transcriptInput"/><br/>
+                        <label class="transcriptInputLabel">Additional Information: </label><input type="text" value="{{additionalInformation}}" class="transcriptInput"/><br/>
+                        <label class="transcriptInputLabel">Overall Result: </label><input type="text" value="{{pass}}" class="transcriptInput"/><br/><br/>
+                        This data has been obtained from a credible Unilog source on the block chain.
+                        Check it against whatever data the token was attached to. You can now determine the integrity
+                        of the information you were given.
+                    {{/if}}
+                {{/with}}
+            <br/>
+                <h5 class="sub-title-hidden">Complete Transparency: Smart Contract</h5>
+                On the Ethereum block chain, every account owns a cryptographic key pair. One benefit of this is that
+                it provides a means for identifying who is invoking a smart contracts function. After analysing the code,
+                you can see that certain functions can only be executed by predefined Ethereum accounts.
+                <br/><br/>e.g. addArtifact can only be executed successfully by Unilog i.e. 'onlyBy(Unilog)'.<br/>
+                This means users cannot add a fake transcript to their smart contract in an attempt to be deceitful.
+                <h6 class="sub-title-hidden">What does this mean for you?</h6>
+                It means you do not have to worry about the integrity of data that requires your inspection.<br/>
+                So leave those detective skills at home and trust the block chain. Simple!<br/>
+                <pre class="well well-info">{{source}}</pre>
+            </article>
+        {{/with}}
+    </div>
+</template>

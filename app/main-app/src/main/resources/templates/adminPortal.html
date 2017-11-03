@@ -1,0 +1,165 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Portal</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="icon" sizes="32x32" href="/favicon.ico?v=3"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../../css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Fredoka+One"/>
+    <style>
+        .left-side-header {
+            font-family: 'Fredoka One', cursive;
+            font-weight: 100;
+            color: #10b745;
+            font-size: 48px;
+            float: left;
+            padding: 10px;
+        }
+
+        .nav {
+            padding: 7px;
+            font-weight: bold;
+        }
+
+        .container-body {
+            margin-left: 7px;
+        }
+
+        .boxalign2 {
+            margin-left: 10px;
+        }
+
+        .inputwrap label {
+            font-weight: bold;
+        }
+
+        .noticemessage label {
+            font-style: italic;
+        }
+
+        .inputwrap1 {
+            float: left;
+        }
+
+        h1 {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="navbar">
+        <div class="navbar-inner">
+            <a class="left-side-header" th:href="@{/}" href="home.html" style="font-size: 2.5em; text-decoration:none;">Unilog.
+                <span style="color:white !important; font-size: 0.5em">&nbsp;&nbsp;&nbsp;&nbsp;Putting you in control</span>
+            </a>
+            <ul class="nav">
+                <li><a th:href="@{/}" href="home.html" style="color:white !important;">&nbsp;&nbsp;Home</a></li>
+                <li><a th:href="@{/upload/qualification}" href="qualification.html" style="color:white !important;">
+                    &nbsp;&nbsp;Upload</a></li>
+                <li><a th:href="@{/complete/registration}" href="registration.html" style="color:white !important;">
+                    &nbsp;&nbsp;Registration</a></li>
+                <li><a th:href="@{/admin/portal}" href="adminPortal.html" style="color:white !important;">&nbsp;&nbsp;Admin
+                    Portal</a></li>
+                <li><a th:href="@{/logout}" href="logout" style="color:white !important;">&nbsp;&nbsp;Logout</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="container-body">
+        <h1>Admin Portal</h1>
+        <form action="#" th:action="@{/admin/portal}" th:object="${adminWindow}" method="post">
+            <br/>
+            <div id="boxalign2" class="boxalign2">
+                <div class="inputwrap">
+                    <label>Admin Account Balance: </label>
+                </div>
+                <div class="noticemessage">
+                    <label th:text="*{accountBalance}">Cannot retrieve balance</label>
+                </div>
+                <br/>
+                <div class="inputwrap">
+                    <label>Publish Registry Smart Contract: </label>
+                    <input type="submit" th:hidden="*{registryPublished}==true" name="action" value="Publish"/>
+                    <p th:if="*{registryPublished} == true"
+                       th:text="'Registry Smart Contract is Published: ' + *{registryContractAddress}"
+                       class="alert"></p>
+                    <p th:if="${registryError}" class="alert alert-error">Registry Smart Contract Failed to Publish.
+                        Please check
+                        server logs.</p>
+                </div>
+                <br/>
+                <div class="noticemessage">
+                    <label>NOTICE: This action sends a transaction to the Ethereum network.</label>
+                </div>
+                <hr/>
+                <br/>
+                <div class="inputwrap">
+                    <label>Register an Account: </label>
+                </div>
+                    <label>Enter Email of New Institutions account: </label>
+                    <input type="text" th:field="*{newAccountEmail}"/><br/>
+                    <input type="submit" name="action" value="Register"/>
+                    <br/>
+                    <br/>
+                    <p th:if="${registrationSuccess}" class="alert alert-success">New Account has been registered!</p>
+                    <p th:if="${registrationError}" class="alert alert-error">Invalid email address entered.
+                        If the problem persists, the server may be experiencing technical difficulties.</p>
+                <hr/>
+                <br/>
+                <div>
+                    <div class="inputwrap">
+                        <label>Transcript owner transactions awaiting authorisation: </label>
+                    </div>
+                    <ul>
+                        <li th:each="item, stat : *{users}" class="itemRow">
+                            <hr/>
+                            <div>
+                                <div class="inputwrap">
+                                    <label th:for="${'id-'+stat.index}"
+                                           th:text="*{'ID: '+users[__${stat.index}__].id}">ID:</label>
+                                </div>
+                                <div class="inputwrap">
+                                    <label th:for="${'emailAddress-'+stat.index}">Email Address</label>
+                                    <div th:text="*{users[__${stat.index}__].emailAddress}"
+                                         th:field="*{users[__${stat.index}__].emailAddress}">Fake content
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="inputwrap1">
+                        <label>Enter ID of account to authorise: </label>
+                        <input type="text" th:field="*{selectedID}"/><br/>
+                        <input type="submit" name="action" value="Complete"/>
+                        <input type="submit" name="action" value="Complete All"/><br/><br/>
+                        <div class="noticemessage">
+                            <label>NOTICE: Please be patient. Transactions will be sent to network and may
+                                take a while due to block propagation delays.</label>
+                            <label>
+                                Upon authorising an account, the following happens:
+                                <ul>
+                                    <li>Unilog.sol Smart contract created for transcript owner</li>
+                                    <li>Transcript owner is sent their token via email</li>
+                                    <li>Transcript data is published to the IPFS network</li>
+                                    <li>Transcript's IPFS content address added to smart contract</li>
+                                    <li>Transcript owner is set as the smart contract's owner</li>
+                                    <li>Smart contract address is added to the Unilog registry contract</li>
+                                </ul>
+                            </label>
+                        </div>
+                        <p th:if="${successOneUser}" class="alert alert-success">Account Authorised. Token has been sent!</p>
+                        <p th:if="${publishError}" class="alert alert-error">Error occurred when publishing. Please
+                            check server
+                            logs. <br/>Have you published the registry?</p>
+                        <p th:if="${allSuccess}" class="alert alert-success">All Accounts Authorised. Tokens have been sent!</p>
+                        <p th:if="${partialSuccess}" class="alert">At least one account was Authorised. Could not
+                            Authorise all accounts.</p>
+                        <p th:if="${zeroSuccess}" class="alert">No Accounts have been Authorised.</p>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

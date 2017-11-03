@@ -1,0 +1,112 @@
+plugins {
+  id "com.github.hierynomus.license" version "0.13.1"
+}
+
+def configDir = new File(buildscript.sourceFile.parentFile, 'config')
+
+ext {
+  checkstyleConfigDir = "$configDir/checkstyle"
+
+}
+
+group = "com.unilog"
+apply plugin: "java"
+apply plugin: 'eclipse'
+
+allprojects {
+  apply plugin: 'checkstyle'
+  apply plugin: 'jacoco'
+
+  checkstyle {
+    def checkstyleFileName = "checkstyle$checkstyle" + ".xml"
+    if (file(checkstyleConfigDir + "/" + checkstyleFileName).exists()) {
+      configFile = new File(checkstyleConfigDir, checkstyleFileName)
+    } else {
+      configFile = new File(checkstyleConfigDir, "checkstyle.xml")
+    }
+    configProperties.checkstyleConfigDir = checkstyleConfigDir
+  }
+
+  checkstyleMain {
+    ignoreFailures = false
+    reports {
+      include ( '**/*.java')
+      xml {
+        destination "${rootProject.buildDir}/reports/checkstyle/main.xml"
+      }
+    }
+  }
+
+  task checkstyleReport << {
+    if (file("$buildDir/reports/checkstyle/${checkType}.xml").exists()) {
+      ant.xslt(in: "$buildDir/reports/checkstyle/${checkType}.xml",
+              style:"config/checkstyle/checkstyle.xsl",
+              out:"$buildDir/reports/checkstyle/checkstyle_${checkType}.html"
+      )
+    }
+  }
+}
+
+subprojects {
+  apply plugin: 'java'
+
+  repositories {
+    mavenCentral()
+  }
+
+  dependencies {
+    compile('org.slf4j:slf4j-api:1.7.21')
+
+    testCompile('junit:junit:4.12')
+  }
+
+    sourceSets {
+      integTest {
+        java {
+          srcDir 'src/integTest/java'
+
+        }
+        resources {
+          compileClasspath += main.output + test.output
+          runtimeClasspath += main.output + test.output
+          srcDirs = ['src/integTest/resources', 'src/test/resources']
+        }
+      }
+    }
+
+  jacocoTestReport {
+    reports {
+      html.enabled = true
+      xml.enabled = true
+      csv.enabled = false
+    }
+  }
+
+  task integTest(type: Test, dependsOn: cleanTest) {
+    testClassesDir = sourceSets.integTest.output.classesDir
+    classpath = sourceSets.integTest.runtimeClasspath
+    // set heap size for the test JVM(s)
+    minHeapSize = "512m"
+    maxHeapSize = "2048m"
+    // set JVM arguments for the test JVM(s)
+    jvmArgs '-XX:MaxPermSize=1024m'
+  }
+
+  check.dependsOn integTest
+
+}
+
+task jacocoRootReport(type: org.gradle.testing.jacoco.tasks.JacocoReport) {
+  afterEvaluate {
+    dependsOn = subprojects.test
+
+    sourceDirectories = files(subprojects.sourceSets.main.allSource.srcDirs)
+    classDirectories = files(subprojects.sourceSets.main.output)
+    executionData = files(subprojects.jacocoTestReport.executionData)
+  }
+  reports {
+    html.enabled = true
+    xml.enabled = true
+    csv.enabled = false
+  }
+}

@@ -1,0 +1,11 @@
+<template name="AllAccount">
+        <article class="account" data-id="{{address}}">
+            <h3>
+                {{name}}
+                {{> dapp_identicon identity=address class="dapp-small"}}
+            </h3>
+            <p>
+                Account Address: <input type="text" value="{{address}}" class="web3_address"/>
+            </p>
+        </article>
+</template>

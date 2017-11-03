@@ -1,0 +1,2 @@
+// Setup EthAccounts
+EthAccounts.init();

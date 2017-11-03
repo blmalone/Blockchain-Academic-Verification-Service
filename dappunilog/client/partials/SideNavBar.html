@@ -1,0 +1,20 @@
+<template name="SideNav">
+    <nav class="side-nav">
+        <ul>
+            <li>
+                <a href="/overview"><i class="fa fa-list"></i> Overview </a>
+            </li>
+        {{#with account}}
+            <li>
+                <a href="/records/{{_id}}"><i class="fa fa-mortar-board"></i> Records </a>
+            </li>
+            <li>
+                <a href="/verifier/{{_id}}"><i class="fa fa-university"></i> Verifier Portal </a>
+            </li>
+        {{/with}}
+            <li>
+                <a href="/notifications"><i class="fa fa-comments"></i> Notifications </a>
+            </li>
+        </ul>
+    </nav>
+</template>
