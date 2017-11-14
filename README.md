@@ -19,6 +19,12 @@ The system demo referenced in the above link is from **v1.0** of the application
 - Users now have the option of creating their own password. Pre-generated password no longer sent to their email address. 
 - Passwords Policy implemented: must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, 1 special character. It also needs to have a minimum length of 8 characters.
 
-![Password Validation](https://imgur.com/jDYlcwe "Password Validation example")
+**Screen Shots**
 
-https://imgur.com/WHTI8sU
+![Password Validation Success](https://github.com/blmalone/Blockchain-Academic-Verification-Service/blob/master/Screen%20Shot%202017-11-14%20at%2019.05.32.png "Password Validation example")
+
+
+
+![Password Validation Fail](https://github.com/blmalone/Blockchain-Academic-Verification-Service/blob/master/Screen%20Shot%202017-11-14%20at%2019.04.15.png "Password Validation example")
+
+
