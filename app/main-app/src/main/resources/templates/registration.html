@@ -131,12 +131,13 @@
                 <p><input type="submit" name="action" value="Activate"/></p>
                 <p th:if="${activated}" class="alert alert-success">Your account has been activated. You will have
                 received a confirmation email.</p>
-                <p th:if="${invalidEmail}" class="alert alert-error">Invalid request. Have you entered a correct email?
-                    Or have you already registered?
+                <p th:if="${invalidEmail}" class="alert alert-error">Invalid request.
+                    Have you incorrectly entered your activation code or email?
                     If the problem persists, the server may be experiencing technical difficulties.
                 </p>
-                <p th:if="${passwordsDoNotMatch}" class="alert alert-error">Invalid request. Passwords do not match.
-                </p>
+                <div th:if="${passwordError}" class="alert alert-error">
+                    <p th:utext="${passwordErrorMessage}"></p>
+                </div>
                 <p th:if="*{registryCreated} == true"
                    th:text="'Unilog Registry Smart Contract Address: ' + *{unilogRegistryContractAddress}"
                    class="alert"></p>

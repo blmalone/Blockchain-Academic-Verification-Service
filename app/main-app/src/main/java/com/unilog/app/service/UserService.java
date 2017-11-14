@@ -60,6 +60,14 @@ public interface UserService {
     boolean completeInstitutionRegistration(final RegistrationRequest request);
 
     /**
+     * Allows a clean way to validate a users password.
+     * @param password1 - First password entered
+     * @param password2 - Second password entered
+     * @return - result of password validation
+     */
+    String validatePassword(final String password1, final String password2);
+
+    /**
      * Generates all required data for the registration view.
      * @return Request object
      */

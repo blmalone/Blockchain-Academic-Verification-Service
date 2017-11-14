@@ -110,6 +110,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public String validatePassword(final String password1, final String password2) {
+        return ValidatorUtils.validatePassword(password1, password2);
+    }
+
+    @Override
     public RegistrationRequest generateRegistrationRequest(final boolean isRegistryCreated) {
         RegistrationRequest registrationRequest = new RegistrationRequest();
         if (!isRegistryCreated) {
