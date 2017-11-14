@@ -48,13 +48,12 @@ public class EmailService implements MailService {
             + "Unilog application.\nTake care when investigating the legitimacy of their request. Bel"
             + "ow are the details of their application: \n\n";
 
-    private final String DETAILS_SUBJECT = "Unilog - Your Login Details";
-    private String detailsBody = "Below are your login details for Unilog. "
-            + "\nMake sure to enjoy our features available to you!\n"
+    private final String DETAILS_SUBJECT = "Unilog - Account Created";
+    private String detailsBody = "An account was created for this email address."
+            + "\nIf you've forgotten your password please contact Unilog customer service directly: +44 7921025920"
+            + "\n\nMake sure to enjoy our features available to you!\n"
             + "Using block chain technology we can reduce the work load of your staff by"
             + " handling the academic verification of transcripts!\n\n";
-
-    private String RECIPIENT = "bmalone05@qub.ac.uk";
 
     public EmailService() {
     }
@@ -175,7 +174,7 @@ public class EmailService implements MailService {
     }
 
     @Override
-    public boolean sendLoginDetailsMail(final String[] to, final String email, final String accountPassword) {
+    public boolean sendAccountCreatedMail(final String[] to, final String email) {
         setupProperties();
         Session session = Session.getDefaultInstance(properties);
         MimeMessage message = new MimeMessage(session);
@@ -192,7 +191,7 @@ public class EmailService implements MailService {
                 message.addRecipient(Message.RecipientType.TO, toAddress[i]);
             }
             message.setSubject(DETAILS_SUBJECT);
-            message.setText(detailsBody + "username: " + email + "\npassword: " + accountPassword);
+            message.setText(detailsBody + "username: " + email);
             Transport transport = session.getTransport("smtp");
             transport.connect(host, username, password);
             transport.sendMessage(message, message.getAllRecipients());

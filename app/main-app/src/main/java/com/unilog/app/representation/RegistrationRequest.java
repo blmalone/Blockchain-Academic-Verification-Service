@@ -20,6 +20,10 @@ public class RegistrationRequest {
 
     private String unilogRegistryContractAddress;
 
+    private String newPassword;
+
+    private String repeatedNewPassword;
+
     public String getRecipientEmailAddress() {
         return recipientEmailAddress;
     }
@@ -90,5 +94,21 @@ public class RegistrationRequest {
 
     public void setRegistryCreated(final boolean registryCreated) {
         this.registryCreated = registryCreated;
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(final String newPassword) {
+        this.newPassword = newPassword;
+    }
+
+    public String getRepeatedNewPassword() {
+        return repeatedNewPassword;
+    }
+
+    public void setRepeatedNewPassword(final String repeatedNewPassword) {
+        this.repeatedNewPassword = repeatedNewPassword;
     }
 }

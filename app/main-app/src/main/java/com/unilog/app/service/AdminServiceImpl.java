@@ -13,8 +13,7 @@ import org.dozer.Mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -46,7 +45,7 @@ public class AdminServiceImpl implements AdminService {
     private MailService emailService;
 
     @Autowired
-    private InMemoryUserDetailsManager inMemoryUserDetailsManager;
+    private PasswordEncoder passwordEncoder;
 
     private final String SUBJECT = "Unilog - Activate your account";
 
@@ -189,15 +188,10 @@ public class AdminServiceImpl implements AdminService {
         Institution institution = new Institution();
         institution.setEmailAddress(request.getNewAccountEmail());
         institution.setRegistrationCode(SecureSessionCode.generateCode());
-        institution.setPassword(SecureSessionCode.generateCode());
         boolean isEmailSent = emailService.sendSetupMail(
                 new String[]{request.getNewAccountEmail()}, institution.getRegistrationCode(), SUBJECT, BODY);
         if (isEmailSent) {
             databaseService.saveInstitution(institution);
-            inMemoryUserDetailsManager.createUser(
-                    new org.springframework.security.core.userdetails.User(
-                            institution.getEmailAddress(), institution.getPassword(),
-                            AuthorityUtils.createAuthorityList("ROLE_USER")));
             return true;
         } else {
             return false;

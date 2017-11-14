@@ -11,6 +11,9 @@ import org.dozer.Mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
@@ -30,6 +33,12 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private MailService emailService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private InMemoryUserDetailsManager inMemoryUserDetailsManager;
 
     @Override
     public String uploadQualification(final com.unilog.app.representation.Qualification qualification)
@@ -79,12 +88,20 @@ public class UserServiceImpl implements UserService {
         }
         if (!institution.isCompletedRegistration()) {
             if (institution.getRegistrationCode().equals(request.getInstitutionCode())) {
+                /*
+                    If registration codes match then encode the password that was
+                    sent inside the 'Registration Request' object and save to DB.
+                 */
                 institution.setCompletedRegistration(true);
-                boolean emailSent = emailService.sendLoginDetailsMail(
-                        new String[]{institution.getEmailAddress()},
-                        institution.getEmailAddress(), institution.getPassword());
+                institution.setPassword(passwordEncoder.encode(request.getNewPassword()));
+                boolean emailSent = emailService.sendAccountCreatedMail(
+                        new String[]{institution.getEmailAddress()}, institution.getEmailAddress());
                 if (emailSent) {
                     databaseService.saveInstitution(institution);
+                    inMemoryUserDetailsManager.createUser(
+                            new org.springframework.security.core.userdetails.User(
+                                    institution.getEmailAddress(), institution.getPassword(),
+                                    AuthorityUtils.createAuthorityList("ROLE_USER")));
                     return true;
                 }
             }

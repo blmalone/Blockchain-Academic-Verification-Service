@@ -43,6 +43,7 @@ public interface AdminService {
     /**
      * Creates an Institution user in the DB. Sends code to the institution and also adds the user to the in memory
      * authentication. It is up to the institution to login after this point.
+     * Hashes the users password with a random salt so it's stored securely.
      * @param request - contains the email to register
      * @return result of registering an account
      */

@@ -118,14 +118,24 @@
                 </div>
                 <div class="inputwrap">
                     <label>Activation Code: </label>
-                    <input type="text" th:field="*{institutionCode}"/><br/>
+                    <input type="text" th:field="*{institutionCode}"/><br/><br/>
+                </div>
+                <div class="inputwrap">
+                    <label for="password">New password: </label>
+                    <input type="password" id="password" th:field="*{newPassword}"/><br/><br/>
+                </div>
+                <div class="inputwrap">
+                    <label for="password">Repeat new password: </label>
+                    <input type="password" th:field="*{repeatedNewPassword}"/>
                 </div>
                 <p><input type="submit" name="action" value="Activate"/></p>
-                <p th:if="${activated}" class="alert alert-success">Your account has been activated. Check your email
-                    for login details.</p>
+                <p th:if="${activated}" class="alert alert-success">Your account has been activated. You will have
+                received a confirmation email.</p>
                 <p th:if="${invalidEmail}" class="alert alert-error">Invalid request. Have you entered a correct email?
                     Or have you already registered?
                     If the problem persists, the server may be experiencing technical difficulties.
+                </p>
+                <p th:if="${passwordsDoNotMatch}" class="alert alert-error">Invalid request. Passwords do not match.
                 </p>
                 <p th:if="*{registryCreated} == true"
                    th:text="'Unilog Registry Smart Contract Address: ' + *{unilogRegistryContractAddress}"

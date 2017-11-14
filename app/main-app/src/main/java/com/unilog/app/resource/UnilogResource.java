@@ -133,7 +133,9 @@ public class UnilogResource {
     @ResponseStatus(value = HttpStatus.ACCEPTED)
     public String completeInstitutionRegistration(@ModelAttribute final RegistrationRequest request, final Map<String, Object> model) {
         LOGGER.info("Applying to register by potential institution");
-        if (!userService.completeInstitutionRegistration(request)) {
+        if (!request.getNewPassword().equals(request.getRepeatedNewPassword())) {
+            model.put("passwordsDoNotMatch", true);
+        } else if (!userService.completeInstitutionRegistration(request)) {
             model.put("invalidEmail", true);
         } else {
             model.put("activated", true);

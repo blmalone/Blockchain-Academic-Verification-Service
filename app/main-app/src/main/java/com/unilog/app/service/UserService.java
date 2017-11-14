@@ -53,6 +53,7 @@ public interface UserService {
     /**
      * After an admin has accepted an application a code will be sent to the institutions email address.
      * For an institution to complete their registration, they will be asked to enter the code that was sent.
+     * They'll also choose a password at this stage to be stored in the database.
      * @param request - contains email and code to be checked against value stored in DB by Admin.
      * @return - result of completed registration
      */
