@@ -11,7 +11,7 @@ For a system demo, refer to this youtube video: [System Demo](https://www.youtub
 
 The system demo referenced in the above link is from v1.0 of the application. Since then the application has more robust security:
 
-**Key Features**
+**Key Features - v1.1**
  
 - Adoption of HTTPS : `keytool -genkey -alias tomcat -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore keystore.p12 -validity 3650`
 - Passwords not longer stored in plain text. Now using BcryptPasswordEncoder to hash the passwords with a randomly generated salt.
