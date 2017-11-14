@@ -6,10 +6,11 @@ Main features of the application can be found in the paper.
 
 Currently lacking in **integration/unit tests** for various components of the system. For the purposes of the research paper all the **smart contract code is extensively tested**. If application ever enters a production environment then test coverage will be dramatically increased before.
 
-
 For a system demo, refer to this youtube video: [System Demo](https://www.youtube.com/watch?v=3-YWdP2X6pw)
 
-The system demo referenced in the above link is from v1.0 of the application. Since then, the application has more robust security:
+---
+
+The system demo referenced in the above link is from **v1.0** of the application. Since then, the application has more robust security:
 
 **Key Features - v1.1**
  
