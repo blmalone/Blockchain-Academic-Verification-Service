@@ -18,3 +18,7 @@ The system demo referenced in the above link is from **v1.0** of the application
 - Passwords no longer stored in plain text. Now using `BcryptPasswordEncoder` to hash the passwords with a randomly generated salt.
 - Users now have the option of creating their own password. Pre-generated password no longer sent to their email address. 
 - Passwords Policy implemented: must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, 1 special character. It also needs to have a minimum length of 8 characters.
+
+![Password Validation](https://imgur.com/jDYlcwe "Password Validation example")
+
+https://imgur.com/WHTI8sU
