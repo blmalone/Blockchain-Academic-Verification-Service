@@ -40,24 +40,22 @@ public class UnilogResource {
     @Secured({"ROLE_ADMIN", "ROLE_USER"})
     public String home(final Map<String, Object> model, final HttpSession session) {
         //checkSession(session);
-        model.put("message", "Logged in Successfully"); //populating message part of model
+        model.put("message", "Logged in Successfully");
         model.put("title", "Finish account activation");
         model.put("date", new Date());
         return "home"; //Display home.html
     }
 
-    //GET - Returns the upload qualifications form.
     @GetMapping("/upload/qualification")
     @Secured({"ROLE_ADMIN", "ROLE_USER"})
     public String uploadQualificationForm(final Model model) {
         com.unilog.app.representation.Qualification qualification = new com.unilog.app.representation.Qualification();
         qualification.getTranscripts().add(new Transcript());
-        qualification.getTranscripts().add(new Transcript()); //Allowing 2 transcripts to be added at a time.
+        qualification.getTranscripts().add(new Transcript());
         model.addAttribute("qualification", qualification);
         return "qualification";
     }
 
-    //POST
     @PostMapping(value = "/upload/qualification", headers = "Accept=application/json")
     @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @ResponseStatus(value = HttpStatus.ACCEPTED)
@@ -71,7 +69,7 @@ public class UnilogResource {
             model.put("success", true);
             com.unilog.app.representation.Qualification emptyQualification = new com.unilog.app.representation.Qualification();
             emptyQualification.getTranscripts().add(new Transcript());
-            emptyQualification.getTranscripts().add(new Transcript()); //Allowing 2 transcripts to be added at a time.
+            emptyQualification.getTranscripts().add(new Transcript());
             model.put("qualification", emptyQualification);
         } else if (result.equals("qualificationError")) {
             model.put("qualificationError", true);
@@ -81,7 +79,6 @@ public class UnilogResource {
         return "qualification";
     }
 
-    //GET - Returns the complete registration form.
     @GetMapping("/complete/registration")
     public String completeRegistrationForm(final Map<String, Object> model) {
         boolean isRegistrySet = false;
@@ -93,7 +90,6 @@ public class UnilogResource {
         return "registration";
     }
 
-    //POST
     @PostMapping(value = "/complete/registration", headers = "Accept=application/json", params = "action=Submit")
     @ResponseStatus(value = HttpStatus.ACCEPTED)
     public String completeRegistration(@ModelAttribute final RegistrationRequest request, final Map<String, Object> model)
@@ -112,7 +108,6 @@ public class UnilogResource {
         return "registration";
     }
 
-    //POST
     @PostMapping(value = "/complete/registration", headers = "Accept=application/json", params = "action=Apply")
     @ResponseStatus(value = HttpStatus.ACCEPTED)
     public String applyForRegistration(@ModelAttribute final RegistrationRequest request, final Map<String, Object> model) throws UserExistsException, IOException, InterruptedException {
@@ -128,7 +123,6 @@ public class UnilogResource {
         return "registration";
     }
 
-    //POST
     @PostMapping(value = "/complete/registration", headers = "Accept=application/json", params = "action=Activate")
     @ResponseStatus(value = HttpStatus.ACCEPTED)
     public String completeInstitutionRegistration(@ModelAttribute final RegistrationRequest request, final Map<String, Object> model) {
@@ -145,7 +139,6 @@ public class UnilogResource {
         return "registration";
     }
 
-    //GET
     @RequestMapping(value = "qualifications/{email}", method = RequestMethod.GET, headers = "Accept=application/json")
     @ResponseStatus(value = HttpStatus.CREATED)
     @Secured({"ROLE_ADMIN", "ROLE_USER"})

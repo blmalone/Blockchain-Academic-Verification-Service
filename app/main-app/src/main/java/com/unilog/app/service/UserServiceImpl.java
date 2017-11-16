@@ -44,19 +44,19 @@ public class UserServiceImpl implements UserService {
     public String uploadQualification(final com.unilog.app.representation.Qualification qualification)
             throws UnsupportedEncodingException {
         if (!checkQualificationIsComplete(qualification)) {
-            return "qualificationError";
+            return qualificationError;
         }
         com.unilog.app.representation.Qualification updatedQualification = fillTranscripts(qualification);
         Qualification newQualification
                 = dozerBeanMapper.map(updatedQualification, Qualification.class);
         if (!ValidatorUtils.validEmailPatterns(newQualification)) {
-            return "emailError";
+            return emailError;
         }
         if (!createUsers(qualification)) {
-            return "emailError";
+            return emailError;
         } else {
             databaseService.saveQualification(newQualification);
-            return "success";
+            return success;
         }
     }
 
@@ -71,7 +71,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean registrationApplication(final String institutionEmailAddress, final String message) {
-        //Send email to Unilog containing information from application.
         if (ValidatorUtils.validEmailPatterns(institutionEmailAddress)) {
             return emailService.sendToAdmin(institutionEmailAddress, message);
         }
@@ -221,4 +220,8 @@ public class UserServiceImpl implements UserService {
         }
         return true;
     }
+
+    private final String emailError = "emailError";
+    private final String qualificationError = "qualificationError";
+    private final String success = "success";
 }

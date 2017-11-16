@@ -13,27 +13,6 @@ public final class ValidatorUtils {
     private ValidatorUtils() {
     }
 
-    public static boolean validEmailPatterns(final Object toCheck) {
-        String regex = "^(.+)@(.+)$";
-        Pattern pattern = Pattern.compile(regex);
-        try {
-            Qualification qualification = (Qualification) toCheck;
-            for (Transcript transcript : qualification.getTranscripts()) {
-                Matcher matcher = pattern.matcher(transcript.getRecipientEmailAddress());
-                if (!matcher.matches()) {
-                    return false;
-                }
-            }
-        } catch (ClassCastException e) {
-            String email = (String) toCheck;
-            Matcher matcher = pattern.matcher(email);
-            if (!matcher.matches()) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     public static String validatePassword(final String password1, final String password2) {
         if (password1 == null || password2 == null || password1.isEmpty() || password2.isEmpty()) {
             return "Please fill all password fields.";
@@ -90,5 +69,26 @@ public final class ValidatorUtils {
                 }
             }
     };
+
+    public static boolean validEmailPatterns(final Object toCheck) {
+        String regex = "^(.+)@(.+)$";
+        Pattern pattern = Pattern.compile(regex);
+        try {
+            Qualification qualification = (Qualification) toCheck;
+            for (Transcript transcript : qualification.getTranscripts()) {
+                Matcher matcher = pattern.matcher(transcript.getRecipientEmailAddress());
+                if (!matcher.matches()) {
+                    return false;
+                }
+            }
+        } catch (ClassCastException e) {
+            String email = (String) toCheck;
+            Matcher matcher = pattern.matcher(email);
+            if (!matcher.matches()) {
+                return false;
+            }
+        }
+        return true;
+    }
 
 }

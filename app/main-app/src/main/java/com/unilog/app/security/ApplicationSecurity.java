@@ -12,18 +12,4 @@ public class ApplicationSecurity extends WebMvcConfigurerAdapter {
         registry.addViewController("/login").setViewName("login");
         registry.addViewController("/access").setViewName("access");
     }
-
-//    @Order(Ordered.HIGHEST_PRECEDENCE)
-//    protected static class AuthenticationSecurity
-//            extends GlobalAuthenticationConfigurerAdapter {
-//
-//        @Override
-//        public void init(final AuthenticationManagerBuilder auth) throws Exception {
-//            auth.inMemoryAuthentication()
-//                    .withUser("admin").password("admin").roles("ADMIN", "USER", "ACTUATOR")
-//                    .and()
-//                    .withUser("qubuni@qub.ac.uk").password("password").roles("USER");
-//        }
-//
-//    }
 }

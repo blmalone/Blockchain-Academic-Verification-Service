@@ -13,7 +13,6 @@ import org.dozer.Mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -43,15 +42,6 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private MailService emailService;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    private final String SUBJECT = "Unilog - Activate your account";
-
-    private final String BODY = "Congratulations, your request for a Unilog account has been accepted.\n"
-            + "Please activate your account with the following code: \n\n";
-
 
     @PostConstruct
     public void addAdminToDatabase() {
@@ -87,15 +77,15 @@ public class AdminServiceImpl implements AdminService {
                 boolean completed = completeSingleAccount(userIDs.get(i));
                 if (!completed) {
                     if (i > 0) {
-                        return "partialSuccess";
+                        return partialSuccess;
                     } else {
-                        return "zeroSuccess";
+                        return zeroSuccess;
                     }
                 }
             }
-            return "allSuccess";
+            return allSuccess;
         }
-        return "zeroSuccess";
+        return zeroSuccess;
     }
 
     private ArrayList<String> getIDs(final List<User> usersWithNonPublishedTranscripts) {
@@ -174,9 +164,9 @@ public class AdminServiceImpl implements AdminService {
                 admin.setRegistryPublished(true);
                 databaseService.saveAdmin(admin);
             }
-            return "success";
+            return success;
         } catch (Exception e) {
-            return "error";
+            return error;
         }
     }
 
@@ -219,4 +209,13 @@ public class AdminServiceImpl implements AdminService {
             return false;
         }
     }
+
+    private final String success = "success";
+    private final String error = "error";
+    private final String zeroSuccess = "zeroSuccess";
+    private final String partialSuccess = "partialSuccess";
+    private final String allSuccess = "allSuccess";
+    private final String SUBJECT = "Unilog - Activate your account";
+    private final String BODY = "Congratulations, your request for a Unilog account has been accepted.\n"
+            + "Please activate your account with the following code: \n\n";
 }
